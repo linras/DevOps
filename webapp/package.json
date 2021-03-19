@@ -1,0 +1,14 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "DevOps project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "author": "Antonina Brzeska",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
