@@ -1,0 +1,48 @@
+version: '3'
+
+#networks:
+#    mymulticont:
+#        name: mymulticont
+
+services:
+    myredis:
+        container_name: myredis
+        image: 'redis:alpine'
+#        networks:
+#            - mymulticont
+
+    mypostgres:
+        container_name: mypostgres
+        image: 'postgres:alpine'
+#        networks:
+#            - mymulticont
+        environment:
+            POSTGRES_PASSWORD: 'Pa$$w0rd'
+            POSTGRES_DB: 'postgres'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_HOST: 'mypostgres'
+        volumes:
+            - ./postgresdata:/var/lib/postgresql/data
+
+    mybackend:
+        container_name: mybackend
+        restart: always
+#        networks:
+#            - mymulticont
+        build:
+            dockerfile: Dockerfile
+            context: ./mybackend
+        volumes:
+            - /opt/myapp/node_modules
+            - ./mybackend:/opt/myapp
+        environment:
+            POSTGRES_PASSWORD: 'Pa$$w0rd'
+            POSTGRES_DB: 'postgres'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_HOST: 'mypostgres'
+            REDIS_HOST: 'myredis'
+        ports:
+            - 8090:5000
+        depends_on:
+            - mypostgres
+            - myredis
