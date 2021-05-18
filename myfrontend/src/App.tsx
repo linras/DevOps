@@ -6,7 +6,7 @@ import { Dogs } from './components';
 function App() {
   return (
     <div className="App">
-      <Dogs bleble={"bleble"}/>
+      <Dogs />
     </div>
   );
 }
