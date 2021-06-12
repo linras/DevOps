@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mybackend-deployment
+  labels:
+    component: backend
+    app: my-app-deployment
+
+spec:
+  template:
+    metadata:
+      name: my-backend-k8s-pod
+      labels:
+        component: backend
+        app: my-app
+    spec:
+      containers:
+        - name: my-backend
+          image: linras/mybackend-k8s
+          ports:
+            - containerPort: 5000
+
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+      component: backend

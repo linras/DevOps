@@ -1,31 +1,41 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
-const port = 5000; 
-const redis = require('redis');
-const { Pool } = require('pg');
-
-const redisClient = redis.createClient({
-    host: "myredis",
-    port: 6379,
-}),
-pgCLient = new Pool({
-    user: "postgres",
-    password: "Pa$$w0rd",
-    database: "postgres",
-    host: "mypostgres",
-    port: "5432"
-});
+const port = 4000; 
 
 app.use(cors());
 app.use(express.json());
 
+const { Pool } = require('pg');
+const pgCLient = new Pool({
+    host: "mypostgres",
+    port: "5432",
+    database: "postgres",
+    user: "postgres",
+    password: "Pa$$w0rd",
+});
 pgCLient.on('error', () => console.log("Postgres not connected"));
 
-pgCLient.query('CREATE TABLE IF NOT EXISTS dogs (id INT, name VARCHAR(20))')
-    .catch((err) => console.log(err));
-
+const redis = require('redis');
+const redisClient = redis.createClient({
+    host: "myredis",
+    port: 6379,
+    //retry_strategy: () => 1000 //every second
+});
 redisClient.on('connect', () => console.log("Connected to redis sever"));
+
+function initiateDogTable(){ 
+    pgCLient.query(`CREATE TABLE IF NOT EXISTS dogs (
+        id SERIAL PRIMARY KEY NOT NULL, 
+        name VARCHAR(20), 
+        yearsOld INT, 
+        race VARCHAR(20), 
+        favouriteFood VARCHAR(20));`)
+        .catch((err) => console.log(err));
+}
+
+initiateDogTable();
+//insert into dogs (id, name, yearsOld, race, favouriteFood) values (1, 'Guzik',3, 'Akita', 'Resztki z obiadu');
 
 const getDogs= (_, res) => {
     pgClient.query('SELECT * FROM dogs ORDER BY name ASC', (error, results) => {
