@@ -1,14 +1,18 @@
+import React, { useEffect } from "react";
 import './App.css';
-import React from "react";
 import "antd/dist/antd.css";
-import { Dogs } from './components';
+import { DogTable } from './components/DogTable';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    axios.defaults.baseURL = 'http://localhost:4000/';
+  }, []);
+
   return (
     <div className="App">
-      <Dogs />
+      <DogTable />
     </div>
   );
 }
-
-export default App;
+ export default App;

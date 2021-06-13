@@ -1,54 +1,74 @@
 import "antd/dist/antd.css";
 import { Input, Form } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import { Dog } from ".";
+import { Dog } from "./DogTable";
 
 interface IProps{
-  dog: Dog | null;
+  initialDog: Dog | null;
   onCancel: () => void;
+  handleDogCreate: (dog: Dog) => Promise<void>;
+  handleDogEdit: (dog: Dog) => Promise<void>;
 }
 
 interface DogFormValues {
-  name: string;
+  name?: string;
+  yearsold?: number;
+  race?: string;
+  favouritefood?: string;
 }
 
-const DogFormImplementation = ({dog, onCancel}: IProps) => {
-  const initialDog = dog ? {name: dog.name} : undefined;
+const DogFormImplementation = ({initialDog, onCancel, handleDogCreate, handleDogEdit}: IProps) => {
+  const initialFormDog = initialDog ? {...initialDog} : undefined;
   const [form] = Form.useForm<DogFormValues>();
 
   const addDog = (dog: Dog) => {
-    console.log(dog);
-    //setEditedDog(undefined);
-    //setDogs([...dogs, dog]);
+    handleDogCreate(dog);
+    onCancel();
   }
 
   const updateDog = (dog: Dog) => {
-    console.log(dog);
-    // setEditedDog(undefined);
-    // setDogs([...dogs.filter(x => x.id !== dog.id), dog]);
+    handleDogEdit(dog);
+    onCancel();
   }
 
   const saveForm = (form: DogFormValues) => {
     const updatedDog : Dog = {
-      name: form.name
+      id: initialDog?.id,
+      name: form.name ?? '',
+      yearsold: form.yearsold ?? 0,
+      race: form.race ?? '',
+      favouritefood: form.favouritefood ?? ''
     }
-    dog ? updateDog(updatedDog) : addDog(updatedDog);
+    initialDog ? updateDog(updatedDog) : addDog(updatedDog);
   }
 
   return (
       <Modal
-      title={dog ? `Edit ${dog.name}` : 'Add a dog'}  
+      title={initialDog ? `Edit ${initialDog.name}` : 'Add a dog'}  
       visible={true}
       onCancel={onCancel}
       onOk={form.submit}>
-        <Form form={form} initialValues={initialDog} onFinish={saveForm}>
+        <Form form={form} initialValues={initialFormDog} onFinish={saveForm}>
           <Form.Item
             name="name"
             label="Dog name">
               <Input />
           </Form.Item>
-          {dog?.name}
-          {dog?.id}
+          <Form.Item
+            name="race"
+            label="Dog race">
+              <Input />
+          </Form.Item>
+          <Form.Item
+            name="yearsold"
+            label="Years old">
+              <Input />
+          </Form.Item>
+          <Form.Item
+            name="favouritefood"
+            label="Favourite food">
+              <Input />
+          </Form.Item>
         </Form>
       </Modal>
   );
