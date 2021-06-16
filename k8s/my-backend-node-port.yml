@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-backend-node-port
+  name: mybackend-node-port
+  # labels:
+  #   component: backend
+  #   app: my-applb
 spec:
   type: NodePort
   ports:
     - port: 5000
       targetPort: 5000
-      nodePort: 31001
+      nodePort: 31001 #31100
   selector:
     component: backend
-    name: my-app
+    name: my-app #lb2

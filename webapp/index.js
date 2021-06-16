@@ -6,7 +6,7 @@ app.get("/", (req, res) => {
     res.status(200).send("Hello dogs, wow!");
   });
 
-const port = 8080;
+const port = 8080; //process.env.PORT ||
 
 app.listen(port, () => {
 console.log(`Look for dogs on http://localhost:${port}`);

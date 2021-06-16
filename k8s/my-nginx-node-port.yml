@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-nginx-pod-port
+  name: mynginx-node-port
 
 spec:
   type: NodePort

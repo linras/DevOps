@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+    name: myfrontend-deployment
+    labels:
+        app: my-app
+        type: frontend
+
+spec:
+    template:
+        metadata:
+            name: myfrontend-pod
+            labels:
+                app: my-app
+                type: frontend
+
+        spec:
+            containers:
+                - name: myfrontend-container
+                  image: linras/myfrontend:k8s
+                  stdin: true
+                  ports:
+                    - containerPort: 3000
+
+    replicas: 3
+    selector:
+        matchLabels:
+            app: my-app
+            type: frontend

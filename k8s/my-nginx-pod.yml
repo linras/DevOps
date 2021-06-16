@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: my-nginx-pod
+  name: mynginx-pod
   labels:
     component: web
     name: my-app
 
 spec:
   containers:
-    - name: my-nginx
-      image: nginx:alpine #linras/mynginx-k8s:latest
+    - name: mynginx
+      image: linras/mynginx:k8s #nginx:alpine
       ports:
         - containerPort: 80

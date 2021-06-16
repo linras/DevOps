@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: ReplicaSet
+kind: Deployment
 metadata:
-  name: mynginx-replicaset
+  name: mynginx-deployment
   labels:
     component: web
     app: my-app
@@ -16,8 +16,9 @@ spec:
     spec:
       containers:
         - name: mynginx-container
-          image: linras/mynginx:k8s # nginx:alpine
-  replicas: 5
+          image: linras/mynginx:k8s
+
+  replicas: 3
   selector:
     matchLabels:
       app: my-app

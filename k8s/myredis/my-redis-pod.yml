@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: my-redis-pod
+  name: myredis-pod
   labels:
     component: cache
 
 spec:
   containers:
-    - name: my-redis
+    - name: myredis
       image: redis:alpine
       ports:
         - containerPort: 6379
