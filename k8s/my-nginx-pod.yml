@@ -9,6 +9,6 @@ metadata:
 spec:
   containers:
     - name: mynginx
-      image: linras/mynginx:k8s #nginx:alpine
+      image: linras/mynginx:k8s
       ports:
         - containerPort: 80

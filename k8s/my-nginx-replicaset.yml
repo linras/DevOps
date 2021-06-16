@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mynginx-container
-          image: linras/mynginx:k8s # nginx:alpine
+          image: linras/mynginx:k8s
   replicas: 5
   selector:
     matchLabels:

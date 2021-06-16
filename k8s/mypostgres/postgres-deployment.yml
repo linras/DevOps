@@ -20,7 +20,6 @@ spec:
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             name: postgresvolume
-            # subPath: postgres
         env:
             - name: POSTGRES_PASSWORD
               valueFrom:

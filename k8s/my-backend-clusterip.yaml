@@ -10,4 +10,4 @@ spec:
 
   selector:
     component: backend
-    # app: my-app
+
